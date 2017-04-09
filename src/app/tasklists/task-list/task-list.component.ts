@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges } from '@
 import { Observable } from "rxjs/Observable";
 import { TaskItem } from '../../global/_models/task-item.model';
 import { TaskList } from '../../global/_models/task-list.model';
+import {TaskListService} from "../../global/_services/task-list.service";
 
 @Component({
   selector: 'task-list',
@@ -9,18 +10,20 @@ import { TaskList } from '../../global/_models/task-list.model';
   styleUrls: ['./task-list.component.less']
 })
 export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
-	constructor() { }
+	constructor(private TaskListService:TaskListService) { }
 	
-	@Input() list: Observable<any>;
+	@Input() list: TaskList;
 	editMode: Boolean = false;
-	showNewItem:Boolean = false;
+	listItems$: Observable<any>;
+	listItems: Array<TaskItem>;
 	newItem: TaskItem = {
 		name: ''
 		,completed: false
 	};
-	listBackup: any;
+	showNewItem:Boolean = false;
 	
 	ngOnInit() {
+		this.loadItems();
 	}
 	ngOnChanges(changes:SimpleChanges) {
 		//console.log('task-list data changed',changes);
@@ -38,7 +41,11 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	
 	editList() {
 		this.editMode = true;
-		this.listBackup = Object.assign({},this.list)
+	}
+	
+	loadItems() {
+		this.listItems$ = this.TaskListService.getItems(this.list.$key);
+		this.listItems$.subscribe(data => this.listItems = data)
 	}
 	
 	onCancelListEdit() {

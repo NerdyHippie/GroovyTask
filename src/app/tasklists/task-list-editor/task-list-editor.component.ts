@@ -15,10 +15,10 @@ export class TaskListEditorComponent implements OnInit {
 
   constructor(private TaskListService:TaskListService,private Logger:Logger) { }
   
-  @Input() list: any;
+  @Input() list: TaskList;
 	@Output() onCancel: EventEmitter<any> = new EventEmitter();
 	@Output() onSave: EventEmitter<any> = new EventEmitter();
-  originalData: any;
+  originalData: TaskList;
 
   ngOnInit() {
   	this.originalData = Object.assign({},this.list);
@@ -45,8 +45,7 @@ export class TaskListEditorComponent implements OnInit {
 	
 	save() {
   	console.log('save list',this.list);
-		this.scrubListData();
-		
+		this.list = this.TaskListService.scrubData(this.list);
 		this.list.$key ? this.updateList() : this.createList();
 	}
 	
