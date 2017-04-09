@@ -1,5 +1,7 @@
-<div *ngIf="item">
-	<input type="text" class="form-control" name="mame" [(ngModel)]="item.name">
-	<button class="btn btn-sm btn-success" (click)="save()">Save</button>
-	<button class="btn btn-sm btn-default" (click)="cancelEdit()">Cancel</button>
-</div>
+<form *ngIf="item" class="item-editor" (submit)="save()">
+	
+	<input type="text" class="form-control" name="mame" [(ngModel)]="item.name" placeholder="{{getPlaceholder()}}">
+	<div class="alert alert-danger" *ngIf="errorData.name">{{errorData.name}}</div>
+	<button type="submit" class="btn btn-sm btn-success">Save</button>
+	<button type="button" class="btn btn-sm btn-default" (click)="cancelEdit()">Cancel</button>
+</form>

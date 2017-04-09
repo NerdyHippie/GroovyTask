@@ -18,6 +18,7 @@ export class TaskListEditorComponent implements OnInit {
   @Input() list: TaskList;
 	@Output() onCancel: EventEmitter<any> = new EventEmitter();
 	@Output() onSave: EventEmitter<any> = new EventEmitter();
+	
   originalData: TaskList;
 
   ngOnInit() {

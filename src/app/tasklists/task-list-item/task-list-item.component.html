@@ -1,20 +1,18 @@
 <div class="item-wrapper" *ngIf="item">
 	<div class="item-body">
-		<div class="small">{{path}}</div>
+		<!--<div class="small">{{path}}</div>-->
 		<div *ngIf="!edit">
 			<button type="button" class="btn btn-sm btn-default pull-right" (click)="showNewItemForm()">
 				<i class="fa fa-plus" title="New Item"></i>
 			</button>
 			<div (click)="editItem()">{{item.name}}</div>
-			<div *ngIf="showNewItem">
-				ADD NEW SUBITEMS
+			<div *ngIf="showNewItem" class="subitems">
 				<task-list-item-editor [item]="newItem" [path]="getItemPath()" (onCancel)="onNewItemCancel()" (onSave)="onNewItemSave()"></task-list-item-editor>
 			</div>
 			
 		
 		</div>
 		<div *ngIf="edit">
-			EDIT EXISTING
 			<task-list-item-editor [item]="item" [path]="getItemPath()" (onCancel)="cancelEdit()" (onSave)="cancelEdit()"></task-list-item-editor>
 		</div>
 		<div *ngIf="item.items" class="subitems">
