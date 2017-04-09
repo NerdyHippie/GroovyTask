@@ -49,7 +49,13 @@ export class TaskListItemEditorComponent implements OnInit {
   	if (this.item.$key) {
 		  ret = 'Edit item';
 	  } else {
-		  ret = 'New subitem';
+  		let depth = (this.path.match(/items/g) || []).length;
+  		console.log('depth',depth);
+  		if (depth > 0) {
+			  ret = 'New subitem';
+		  } else {
+  			ret = 'New item';
+		  }
 	  }
 	  
 	  return ret;
@@ -72,6 +78,7 @@ export class TaskListItemEditorComponent implements OnInit {
   
   validate() {
   	let isValid:Boolean = true;
+  	this.errorData = {};
   	if (!this.item.name || !this.item.name.length) {
   		isValid = false;
   		this.errorData.name = "Each item must have a name";

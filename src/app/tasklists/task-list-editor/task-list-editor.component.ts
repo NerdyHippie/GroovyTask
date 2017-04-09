@@ -20,7 +20,8 @@ export class TaskListEditorComponent implements OnInit {
 	@Output() onSave: EventEmitter<any> = new EventEmitter();
 	
   originalData: TaskList;
-
+	errorData: any = {};
+	
   ngOnInit() {
   	this.originalData = Object.assign({},this.list);
   	delete this.originalData.items;
@@ -67,5 +68,10 @@ export class TaskListEditorComponent implements OnInit {
 		this.onSave.emit();
  	}
 	
-	
+	validate() {
+  	let isValid:Boolean = true;
+  	this.errorData = {};
+  	
+  	return isValid;
+	}
 }
