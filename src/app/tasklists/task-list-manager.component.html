@@ -1,0 +1,8 @@
+<button type="button" class="btn btn-sm btn-default float-right" (click)="showNewListForm()">
+	<i class="fa fa-plus" title="New Task List"></i> New Task List
+</button>
+<h2>Tasklists</h2>
+<task-list-editor *ngIf="newListFormVisible" [list]="newTasklist" (onCancel)="onNewListCancel()" (onSave)="onNewListSave()"></task-list-editor>
+<section class="task-list-container">
+	<task-list *ngFor="let list of tasklists" [list]="list"></task-list>
+</section>

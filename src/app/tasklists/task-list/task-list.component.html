@@ -1,0 +1,27 @@
+<div class="task-list-base">
+	<div class="task-list-bkg">
+		<div class="list-info" *ngIf="!editMode">
+			<button type="button" class="btn btn-sm btn-default float-right" (click)="editList()">
+				<i class="fa fa-pencil"></i> Edit
+			</button>
+			<div class="name">{{list.name}}</div>
+			<div class="description">
+				{{list.description}}
+			</div>
+		</div>
+		<div class="list-edit" *ngIf="editMode">
+			<task-list-editor [list]="list" (onCancel)="onCancelListEdit()" (onSave)="onListSave()"></task-list-editor>
+		</div>
+		<div class="list-items">
+			<div class="item-header">
+				<i class="fa fa-plus float-right" title="New Item" (click)="showNewItemForm()"></i>
+				Items
+			</div>
+			<task-list-item-editor [item]="newItem" (onCancel)="cancelNewItem()" (onSave)="cancelNewItem()" *ngIf="showNewItem"></task-list-item-editor>
+			<task-list-item *ngFor="let item of list.items" [item]="item"></task-list-item>
+			<div *ngIf="!list.items">
+				No Items Yet
+			</div>
+		</div>
+	</div>
+</div>

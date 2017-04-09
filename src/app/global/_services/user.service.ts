@@ -51,7 +51,7 @@ export class UserService {
 		for (let item of providerData) {
 			ret[item.providerId.replace('.com','')] = item.uid;
 		}
-		console.log('makeProviderObj',ret);
+		this.logger.log('makeProviderObj',ret);
 		return ret;
 	}
 	

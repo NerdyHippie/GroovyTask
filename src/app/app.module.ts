@@ -20,12 +20,17 @@ import { TestModule } from './test/test.module';
 // Components
 import { AppComponent }  from './app.component';
 import { NavBarComponent }  from './core/nav-bar/nav-bar.component';
+import { TaskListManagerComponent } from './tasklists/task-list-manager.component';
+import { TaskListComponent } from './tasklists/task-list/task-list.component';
+import { TaskListItemComponent } from './tasklists/task-list-item/task-list-item.component';
 
 // Global Services
-import { AlertService,AuthenticationService,Logger,UserService,UtilService } from './global/_services/index';
+import { AlertService,AuthenticationService,Logger,TaskListService,UserService,UtilService } from './global/_services/index';
 
 // Environment
 import { environment } from '../environments/environment';
+import { TaskListItemEditorComponent } from './tasklists/task-list-item-editor/task-list-item-editor.component';
+import { TaskListEditorComponent } from './tasklists/task-list-editor/task-list-editor.component';
 
 
 // Concatenate Components here for readability
@@ -50,7 +55,12 @@ export const PrimeModules: Array<any> = [CalendarModule,EditorModule,GlobalModul
   declarations: [
     AppComponent,
     CoreComponents,
-    AppRoutingComponents
+    AppRoutingComponents,
+    TaskListComponent,
+    TaskListManagerComponent,
+    TaskListItemComponent,
+    TaskListItemEditorComponent,
+    TaskListEditorComponent
   ],
   
   providers: [
@@ -58,6 +68,7 @@ export const PrimeModules: Array<any> = [CalendarModule,EditorModule,GlobalModul
     AlertService,
     AuthenticationService,
     Logger,
+	  TaskListService,
     UserService,
     UtilService
   ],

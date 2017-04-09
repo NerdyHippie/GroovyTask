@@ -1,0 +1,23 @@
+<h3 *ngIf="!list.$key">
+	New List:
+</h3>
+
+<form (submit)="save()">
+	<div class="form-group">
+		<label>Name</label>
+		<input type="text" class="form-control" name="name" [(ngModel)]="list.name">
+	</div>
+	<div class="form-group">
+		<label>Description</label>
+		<input type="text" class="form-control" name="description" [(ngModel)]="list.description">
+	</div>
+	<div class="checkbox">
+		<label>
+			<input type="checkbox" name="archived" [(ngModel)]="list.archived"> Archived
+		</label>
+	</div>
+	<div class="align-right">
+		<button type="submit" class="btn btn-sm btn-success">Save</button>
+		<button type="button" class="btn btn-sm btn-danger" (click)="cancelEdit()">Cancel</button>
+	</div>
+</form>

@@ -24,7 +24,7 @@ export class AuthenticationService {
     	this.auth = af.auth;
     	
 			af.auth.subscribe((authData) => {
-				logger.log('authData in authenticationService',authData);
+				this.logger.log('authData in authenticationService',authData);
 				if (authData) {
 					this.loggedIn = true;
 					this.handleAuthSuccess(authData);

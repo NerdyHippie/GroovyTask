@@ -1,0 +1,5 @@
+<div *ngIf="item">
+	<input type="text" class="form-control" name="mame" [(ngModel)]="item.name">
+	<button class="btn btn-sm btn-success" (click)="save()">Save</button>
+	<button class="btn btn-sm btn-default" (click)="cancelEdit()">Cancel</button>
+</div>

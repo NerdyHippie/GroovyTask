@@ -12,11 +12,16 @@ import { ResetRequestComponent } from './core/reset-request/reset-request.compon
 import { EmailActionComponent } from './core/email-action/email-action.component';
 import { UserDetailComponent } from './admin/user-detail/user-detail.component';
 import { UserEditorComponent } from './admin/user-editor/user-editor.component';
+import { TaskListManagerComponent } from './tasklists/task-list-manager.component';
 
 const appRoutes: Routes = [
     {
         path: ''
         ,component: HomeComponent
+				,canActivate: [ AuthGuard ]
+    },{
+        path: 'tasklists'
+        ,component: TaskListManagerComponent
 				,canActivate: [ AuthGuard ]
     },{
         path: 'calendar'
@@ -49,5 +54,5 @@ const appRoutes: Routes = [
     }
 ];
 
-export const AppRoutingComponents = [HomeComponent,CalendarComponent,LoginComponent,LogoutComponent,RegisterComponent,ResetRequestComponent,EmailActionComponent];
+export const AppRoutingComponents = [HomeComponent,CalendarComponent,LoginComponent,LogoutComponent,RegisterComponent,ResetRequestComponent,EmailActionComponent,TaskListManagerComponent];
 export const AppRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes);

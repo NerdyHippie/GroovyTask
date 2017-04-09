@@ -1,0 +1,10 @@
+<div class="item-wrapper" *ngIf="item">
+	<div class="item-body">
+		<div *ngIf="!edit" (click)="editItem()">
+			{{item.name}}
+		</div>
+		<div *ngIf="edit">
+			<task-list-item-editor [item]="item" (onCancel)="cancelEdit()" (onSave)="cancelEdit()"></task-list-item-editor>
+		</div>
+	</div>
+</div>
