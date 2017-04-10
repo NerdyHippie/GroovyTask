@@ -50,7 +50,7 @@ export class TaskListItemEditorComponent implements OnInit {
 		  ret = 'Edit item';
 	  } else {
   		let depth = (this.path.match(/items/g) || []).length;
-  		console.log('depth',depth);
+  		//console.log('depth',depth);
   		if (depth > 0) {
 			  ret = 'New subitem';
 		  } else {
@@ -72,8 +72,12 @@ export class TaskListItemEditorComponent implements OnInit {
   updateItem() {
 		console.log('Update Item');
 	  let itemToSave = this.TaskListService.getItem(this.path);
-	  itemToSave.update(this.item);
-	  this.onSave.emit();
+	  let promise = itemToSave.update(this.item);
+	  
+	  promise
+		  .then(data => this.onSave.emit())
+		  .catch(error => console.warn('Error updating item.',error));
+	  //this.onSave.emit();
   }
   
   validate() {
