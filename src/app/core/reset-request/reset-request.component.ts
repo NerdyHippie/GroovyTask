@@ -14,7 +14,8 @@ export interface ResetModel {
 
 export class ResetRequestComponent implements OnInit {
 		model:ResetModel = {email:''};
-	
+		loading:Boolean;
+		
     constructor(
     	private authenticationService:AuthenticationService,
 			private router:Router

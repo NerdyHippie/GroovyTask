@@ -15,7 +15,24 @@
 	.drop-shadow(@hShadow:5px,@vShadow:5px);
 	.border-radius(8px);
 	padding: 10px;
-	background-color: white;
+	background-color: @white;
+	position: relative;
+}
+
+.list-menu {
+	border: 1px solid @black25;
+	background-color: @white;
+	.drop-shadow(2px,2px,5px,3px);
+	.border-radius(4px);
+	position: absolute;
+	top: 40px;
+	right: 10px;
+	text-align: left;
+	z-index: 100;
+	button {
+		text-align: left;
+		width: 100%;
+	}
 }
 
 .item-header {

@@ -14,6 +14,9 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	
 	@Input() list: TaskList;
 	editMode: Boolean = false;
+	menuOpen: Boolean = false;
+	tasklist$: Observable<any>;
+	tasklist: TaskList;
 	listItems$: Observable<any>;
 	listItems: Array<TaskItem>;
 	newItem: TaskItem = {
@@ -23,6 +26,7 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	showNewItem:Boolean = false;
 	
 	ngOnInit() {
+		this.loadList();
 		this.loadItems();
 	}
 	ngOnChanges(changes:SimpleChanges) {
@@ -39,13 +43,32 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 		};
 	}
 	
+	closeMenu() {
+		if (this.menuOpen) this.menuOpen = false;
+	}
+	
+	testFunc() {
+		console.log('test fnuc works')
+	}
+	
+	deleteList() {
+		this.closeMenu();
+		alert('delete list needs to be set up');
+	}
+	
 	editList() {
+		this.closeMenu();
 		this.editMode = true;
 	}
 	
 	loadItems() {
 		this.listItems$ = this.TaskListService.getItems(this.list.$key);
 		this.listItems$.subscribe(data => this.listItems = data)
+	}
+	
+	loadList() {
+		this.tasklist$ = this.TaskListService.getTasklist(this.list.$key);
+		this.tasklist$.subscribe(data => this.tasklist = data);
 	}
 	
 	onCancelListEdit() {
@@ -60,4 +83,7 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 		this.showNewItem = true;
 	}
 	
+	toggleMenu() {
+		this.menuOpen = !this.menuOpen;
+	}
 }

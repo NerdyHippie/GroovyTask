@@ -9,11 +9,9 @@
 			<div *ngIf="showNewItem" class="subitems">
 				<task-list-item-editor [item]="newItem" [path]="getItemPath()" (onCancel)="onNewItemCancel()" (onSave)="onNewItemSave()"></task-list-item-editor>
 			</div>
-			
-		
 		</div>
 		<div *ngIf="edit">
-			<task-list-item-editor [item]="item" [path]="getItemPath()" (onCancel)="cancelEdit()" (onSave)="cancelEdit()"></task-list-item-editor>
+			<task-list-item-editor [item]="item" [path]="getItemPath()" (onCancel)="onEditCancel()" (onSave)="onEditSave()"></task-list-item-editor>
 		</div>
 		<div *ngIf="item.items" class="subitems">
 			<task-list-item *ngFor="let subitem of subitems" [item]="subitem" [path]="getItemPath()"></task-list-item>

@@ -13,9 +13,9 @@ import { User } from "../../global/_models/user.model";
 	,styleUrls: ['nav-bar.component.less']
 })
 export class NavBarComponent implements OnInit {
-		private loggedIn:Boolean = false;
+		public loggedIn:Boolean = false;
 		public isCollapsed:Boolean = true;
-		private currentUser:User = null;
+		public currentUser:User = null;
 	
     constructor(private authSvc: AuthenticationService,private userService:UserService, private af:AngularFire, private router: Router) { }
 

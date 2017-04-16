@@ -38,10 +38,25 @@ export class TaskListItemEditorComponent implements OnInit {
   }
 
   createItem() {
-		console.log('Create Item');
-	  let itemList = this.TaskListService.getItems(this.path);
+		let itemList = this.TaskListService.getItems(this.path);
 	  itemList.push(this.item);
 		this.onSave.emit();
+  }
+   
+  doSubmitError(error) {
+  	this.errorData = {};
+  	
+  	switch(error.code) {
+		  case "PERMISSION_DENIED":
+		  	this.errorData.submitError = 'You do not have permission to update this list.';
+		  	alert(this.errorData.submitError);
+		  	//console.log('no dice');
+		  	break;
+	  }
+  }
+  
+  doSubmitSuccess(data) {
+ 	  this.onSave.emit();
   }
   
   getPlaceholder() {
@@ -70,14 +85,12 @@ export class TaskListItemEditorComponent implements OnInit {
   }
   
   updateItem() {
-		console.log('Update Item');
-	  let itemToSave = this.TaskListService.getItem(this.path);
+		let itemToSave = this.TaskListService.getItem(this.path);
 	  let promise = itemToSave.update(this.item);
 	  
 	  promise
-		  .then(data => this.onSave.emit())
-		  .catch(error => console.warn('Error updating item.',error));
-	  //this.onSave.emit();
+		  .then(data => this.doSubmitSuccess(data))
+		  .catch(error => this.doSubmitError(error));
   }
   
   validate() {

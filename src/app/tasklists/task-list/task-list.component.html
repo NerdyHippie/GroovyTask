@@ -1,25 +1,29 @@
 <div class="task-list-base">
-	<div class="task-list-bkg">
-		<div class="list-info" *ngIf="!editMode">
-			<button type="button" class="btn btn-sm btn-default float-right" (click)="editList()">
-				<i class="fa fa-pencil"></i> Edit
-			</button>
-			<div class="name">{{list.name}}</div>
+	<div class="task-list-bkg" *ngIf="tasklist">
+		<button type="button" class="btn btn-sm btn-default float-right" (click)="toggleMenu()">
+			<i class="fa fa-bars"></i>
+		</button>
+		<div class="list-menu" *ngIf="menuOpen">
+			<button class="btn btn-link btn-sm" (click)="editList()" [disabled]="editMode"><i class="fa fa-pencil"></i> Edit</button>
+			<button class="btn btn-link btn-sm" (click)="deleteList()"><i class="fa fa-times"></i> Delete</button>
+		</div>
+		<div class="list-info" *ngIf="!editMode" (click)="closeMenu()">
+			<div class="name">{{tasklist.name}}</div>
 			<div class="description">
-				{{list.description}}
+				{{tasklist.description}}
 			</div>
 		</div>
-		<div class="list-edit" *ngIf="editMode">
+		<div class="list-edit" *ngIf="editMode" (click)="closeMenu()">
 			<task-list-editor [list]="list" (onCancel)="onCancelListEdit()" (onSave)="onListSave()"></task-list-editor>
 		</div>
-		<div class="list-items">
-			<div class="item-header">
+		<div class="list-items" (click)="closeMenu()">
+			<div class="item-header" (click)="testFunc()">
 				<i class="fa fa-plus float-right" title="New Item" (click)="showNewItemForm()"></i>
 				Items
 			</div>
-			<task-list-item-editor [item]="newItem" [path]="list.$key" (onCancel)="cancelNewItem()" (onSave)="cancelNewItem()" *ngIf="showNewItem"></task-list-item-editor>
-			<task-list-item *ngFor="let item of listItems" [item]="item" [path]="list.$key"></task-list-item>
-			<div *ngIf="!list.items">
+			<task-list-item-editor [item]="newItem" [path]="tasklist.$key" (onCancel)="cancelNewItem()" (onSave)="cancelNewItem()" *ngIf="showNewItem"></task-list-item-editor>
+			<task-list-item *ngFor="let item of listItems" [item]="item" [path]="tasklist.$key"></task-list-item>
+			<div *ngIf="tasklist && !tasklist.items">
 				No Items Yet
 			</div>
 		</div>

@@ -1,6 +1,35 @@
 {
-  "rules": {
-    ".read": "true",
-    ".write": "true"
-  }
+	"rules": {
+		"users": {
+			"$userId": {
+				".read": "auth.uid != null",
+				".write": "auth.uid != null"
+			}
+		},
+		"tasklists": {
+			//".read": "auth.uid != null",
+			"$listId": {
+				".read": "root.child('listRights/list2user/' + $listId + '/' + auth.uid).exists()",
+				".write": "!data.exists() || root.child('listRights/list2user/' + $listId + '/' + auth.uid).exists()"
+			}
+		},
+		"listRights": {
+			".read": "auth.uid != null",
+			".write": "auth.uid != null",
+			
+			"list2user": {
+				"$listId": {
+					".read": "auth.uid != null",
+					".write": "auth.uid != null"
+				}
+			},
+			"user2list": {
+				"$userId": {
+					".read": "auth.uid != null",
+					".write": "auth.uid != null"
+				}
+			}
+		}
+		
+	}
 }

@@ -32,10 +32,6 @@ export class TaskListItemComponent implements OnInit,OnChanges,OnDestroy {
 	}
 	ngOnDestroy() { }
 	
-	cancelEdit() {
-		//console.log('cancelEdit in task-list-item');
-		this.edit = false;
-	}
 	editItem() {
 		this.edit = true;
 	}
@@ -50,6 +46,14 @@ export class TaskListItemComponent implements OnInit,OnChanges,OnDestroy {
 		this.subitems$.subscribe(data => this.subitems = data);
 	}
 	
+	onEditCancel() {
+		//console.log('onEditCancel in task-list-item');
+		this.edit = false;
+	}
+	onEditSave() {
+		//console.log('onEditSave in task-list-item');
+		this.edit = true;
+	}
 	onNewItemCancel() {
 		this.showNewItem = false;
 	}
