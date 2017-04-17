@@ -3,30 +3,47 @@
 		"users": {
 			"$userId": {
 				".read": "auth.uid != null",
-				".write": "auth.uid != null"
+				".write": "auth.uid == $userId"
 			}
 		},
 		"tasklists": {
-			//".read": "auth.uid != null",
 			"$listId": {
 				".read": "root.child('listRights/list2user/' + $listId + '/' + auth.uid).exists()",
-				".write": "!data.exists() || root.child('listRights/list2user/' + $listId + '/' + auth.uid).exists()"
+				".write": "(auth.uid != null && !data.exists()) || (root.child('listRights/list2user/' + $listId + '/' + auth.uid).exists() && root.child('listRights/list2user/' + $listId + '/' + auth.uid).val() != 'readOnly')"
+				// Data is new
+				// If a list2user entry exists and is not readOnly
 			}
 		},
 		"listRights": {
-			".read": "auth.uid != null",
-			".write": "auth.uid != null",
-			
 			"list2user": {
 				"$listId": {
-					".read": "auth.uid != null",
-					".write": "auth.uid != null"
+					".read": "auth.uid != null",  // If you are on this list - user2list/$userId/$listId .exists() and has rights
+					".write": "(!data.exists() && auth.uid != null) || (data.hasChild(auth.uid) && data.child(auth.uid).val() != 'readOnly') || (data.hasChild(auth.uid) && data.child(auth.uid).val() != '!readOnly') || (!newData.exists() && !root.child('tasklists/' + $listId).exists())"
+					// If the list is new
+					// If you are any member of this list other than a read-only user
+					// If you are deleting the record because the tasklist was deleted
 				}
 			},
 			"user2list": {
 				"$userId": {
-					".read": "auth.uid != null",
-					".write": "auth.uid != null"
+					".read": "auth.uid == $userId",
+					//".write": "(!data.exists() && auth.uid != null)",
+					// If the user is new
+					
+					"$listId": {
+						".write": "(!data.exists() && auth.uid != null) || (auth.uid == $userId) || (auth.uid != null && newData.val() == 'invited') || (!newData.exists() && !root.child('tasklists/' + $listId).exists())"
+					}
+					// If the list is new
+					// If the user is me
+					// if status is "invited" && auth.uid != null)
+					// If you are deleting the record because the tasklist was deleted
+					
+					// TODO: ?? and auth.uid is an authorized user in list2users ??
+					
+					// When I share a list with you, I will write $userId/$listId = "invited" in user2list.
+					// I will write your actual permissions under list2user/$listId with an exclamation mark to indicate that the invitation has not been accepted.
+					
+					
 				}
 			}
 		}

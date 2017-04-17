@@ -15,10 +15,11 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	@Input() list: TaskList;
 	editMode: Boolean = false;
 	menuOpen: Boolean = false;
-	tasklist$: Observable<any>;
+	tasklist$: any;
 	tasklist: TaskList;
 	listItems$: Observable<any>;
 	listItems: Array<TaskItem>;
+	listMembers:any;
 	newItem: TaskItem = {
 		name: ''
 		,completed: false
@@ -46,14 +47,34 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	closeMenu() {
 		if (this.menuOpen) this.menuOpen = false;
 	}
-	
-	testFunc() {
-		console.log('test fnuc works')
-	}
-	
+		
 	deleteList() {
+		console.warn('firing deleteList');
 		this.closeMenu();
-		alert('delete list needs to be set up');
+		
+		let listId:string = this.tasklist.$key;
+		
+		console.log('listId',listId);
+		
+		this.listMembers = this.TaskListService.getListRights('list2user',listId);
+		this.listMembers.subscribe(data => this.deleteListForUsers(data,listId));
+		
+		
+		console.warn('TODO: delete list needs to be set up');
+	}
+	deleteListForUsers(members,listId) {
+		console.log('firing deleteListForUsers',members);
+		
+		this.tasklist$.remove();
+		
+		for (let key in members) {
+			console.log('clear for ',key);
+			
+			
+			this.TaskListService.getListRights('user2list',listId,key).remove();
+		}
+		
+		this.listMembers.remove();
 	}
 	
 	editList() {

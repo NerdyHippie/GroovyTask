@@ -20,24 +20,32 @@ export class TaskListService {
 		this.UserService.currentUser.subscribe((data:any) => this.currentUser = data);
 	}
 	
-	public getItem(path:String):any {
+	public getItem(path:string):any {
 		return this.af.database.object('/tasklists/' + path);
 	}
-	public getItems(path:String):any {
+	public getItems(path:string):any {
 		return this.af.database.list('/tasklists/' + path + '/items');
 	}
 	
-	public getListRights(type:String,listId:String,userId:String) {
+	public getListRights(type:string,listId:string,userId?:string) {
+		let path:string = '/listRights/' + type + '/';
+		
 		switch(type) {
 			case "list2user":
-				return this.af.database.object('/listRights/list2user/'+listId+'/'+userId);
+				path += listId;
+				if (userId) {
+					path += '/' + userId;
+				}
+				break;
 			case "user2list":
-				return this.af.database.object('/listRights/user2list/'+userId+'/'+listId);
+				path += userId + '/' + listId;
+				break;
 		}
 		
+		return this.af.database.object(path);
 	}
 	
-	public getListsForUser(userId:String):any {
+	public getListsForUser(userId:string):any {
 		//console.log('getMyLists()',this.currentUser);
 		return this.af.database.list('/listRights/user2list/'+userId);
 	}
@@ -46,7 +54,7 @@ export class TaskListService {
 		let path = '/tasklists';
 		return this.af.database.list(path);
 	}
-	public getTasklist(listId:String):any {
+	public getTasklist(listId:string):any {
 		let path = '/tasklists/'+listId;
 		return this.af.database.object(path);
 	}
