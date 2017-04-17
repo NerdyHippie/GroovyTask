@@ -1,13 +1,13 @@
 export interface User {
-	email: String
-	uid?: String
-	$key?: String
-	firstName?: String
-	lastName?: String
-	displayName?: String
-	photoURL?: String
-	provider?: String
-	dateCreated?: String
+	email: string
+	uid?: string
+	$key?: string
+	firstName?: string
+	lastName?: string
+	displayName?: string
+	photoURL?: string
+	provider?: string
+	dateCreated?: string
 	admin?: Boolean
 	providers?: any
 }

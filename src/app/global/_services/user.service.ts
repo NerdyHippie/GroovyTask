@@ -8,13 +8,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
 
 export interface NewUserData {
-	uid?: String
-	,firstName?: String
-	,lastName?: String
-	,email: String
-	,photoURL?: String
-	,displayName?: String
-	,dateCreated?: String
+	uid?: string
+	,firstName?: string
+	,lastName?: string
+	,email: string
+	,photoURL?: string
+	,displayName?: string
+	,dateCreated?: string
 }
 
 @Injectable()

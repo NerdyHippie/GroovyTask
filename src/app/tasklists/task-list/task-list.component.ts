@@ -13,18 +13,19 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	constructor(private TaskListService:TaskListService) { }
 	
 	@Input() list: TaskList;
+	
 	editMode: Boolean = false;
-	menuOpen: Boolean = false;
-	tasklist$: any;
-	tasklist: TaskList;
-	listItems$: Observable<any>;
+	listItems$: any;
 	listItems: Array<TaskItem>;
-	listMembers:any;
+	listMembers$:any;
 	newItem: TaskItem = {
 		name: ''
 		,completed: false
 	};
+	menuOpen: Boolean = false;
 	showNewItem:Boolean = false;
+	tasklist$: any;
+	tasklist: TaskList;
 	
 	ngOnInit() {
 		this.loadList();
@@ -33,7 +34,7 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	ngOnChanges(changes:SimpleChanges) {
 		//console.log('task-list data changed',changes);
 	}
-	ngOnDestroy() { }
+	ngOnDestroy() {}
 	
 	cancelNewItem() {
 		//console.log('cancelNewItem from task-list')
@@ -49,32 +50,21 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	}
 		
 	deleteList() {
-		console.warn('firing deleteList');
 		this.closeMenu();
 		
 		let listId:string = this.tasklist.$key;
-		
-		console.log('listId',listId);
-		
-		this.listMembers = this.TaskListService.getListRights('list2user',listId);
-		this.listMembers.subscribe(data => this.deleteListForUsers(data,listId));
-		
-		
-		console.warn('TODO: delete list needs to be set up');
+	
+		this.listMembers$ = this.TaskListService.getListRights('list2user',listId);
+		this.listMembers$.subscribe(data => this.deleteListForUsers(data,listId));
 	}
 	deleteListForUsers(members,listId) {
-		console.log('firing deleteListForUsers',members);
-		
 		this.tasklist$.remove();
 		
 		for (let key in members) {
-			console.log('clear for ',key);
-			
-			
 			this.TaskListService.getListRights('user2list',listId,key).remove();
 		}
 		
-		this.listMembers.remove();
+		this.listMembers$.remove();
 	}
 	
 	editList() {

@@ -34,10 +34,10 @@ export class TaskListManagerComponent implements OnInit {
   }*/
   
   loadMyLists(userData) {
-  	console.log('loading list data for user',userData);
+  	//console.log('loading list data for user',userData);
 	  this.myLists$ = this.TaskListService.getListsForUser(userData.uid);
 	  this.myLists$.subscribe(data => {
-		  console.log('myLists$',data);
+		  //console.log('myLists$',data);
 		  this.myLists = data
 	  });
   }

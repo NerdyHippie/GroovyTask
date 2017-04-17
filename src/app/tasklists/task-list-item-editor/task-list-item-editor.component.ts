@@ -15,7 +15,7 @@ export class TaskListItemEditorComponent implements OnInit {
   constructor(private TaskListService:TaskListService,private Logger:Logger) { }
 	
 	@Input() item:TaskItem;
-  @Input() path: String;
+  @Input() path: string;
   @Output() onCancel: EventEmitter<any> = new EventEmitter();
   @Output() onSave: EventEmitter<any> = new EventEmitter();
   

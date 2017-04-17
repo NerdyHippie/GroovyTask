@@ -27,7 +27,7 @@ export class TaskListService {
 		return this.af.database.list('/tasklists/' + path + '/items');
 	}
 	
-	public getListRights(type:string,listId:string,userId?:string) {
+	public getListRights(type:string,listId:string,userId?:String) {
 		let path:string = '/listRights/' + type + '/';
 		
 		switch(type) {
@@ -45,7 +45,7 @@ export class TaskListService {
 		return this.af.database.object(path);
 	}
 	
-	public getListsForUser(userId:string):any {
+	public getListsForUser(userId:String):any {
 		//console.log('getMyLists()',this.currentUser);
 		return this.af.database.list('/listRights/user2list/'+userId);
 	}
