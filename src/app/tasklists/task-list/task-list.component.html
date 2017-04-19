@@ -5,24 +5,25 @@
 		</button>
 		<div class="list-menu" *ngIf="menuOpen">
 			<button class="btn btn-link btn-sm" (click)="editList()" [disabled]="editMode"><i class="fa fa-pencil"></i> Edit</button>
+			<button class="btn btn-link btn-sm" (click)="toggleShowComplete()"><i class="fa fa-fw fa-check"></i> <span *ngIf="!showComplete">Show</span><span *ngIf="showComplete">Hide</span> Completed Items</button>
 			<button class="btn btn-link btn-sm" (click)="deleteList()"><i class="fa fa-times"></i> Delete</button>
 		</div>
-		<div class="list-info" *ngIf="!editMode" (click)="closeMenu()">
+		<div class="list-info" *ngIf="!editMode">
 			<div class="name">{{tasklist.name}}</div>
 			<div class="description">
 				{{tasklist.description}}
 			</div>
 		</div>
-		<div class="list-edit" *ngIf="editMode" (click)="closeMenu()">
+		<div class="list-edit" *ngIf="editMode">
 			<task-list-editor [list]="list" (onCancel)="onCancelListEdit()" (onSave)="onListSave()"></task-list-editor>
 		</div>
-		<div class="list-items" (click)="closeMenu()">
+		<div class="list-items">
 			<div class="item-header">
 				<i class="fa fa-plus float-right" title="New Item" (click)="showNewItemForm()"></i>
 				Items
 			</div>
 			<task-list-item-editor [item]="newItem" [path]="tasklist.$key" (onCancel)="cancelNewItem()" (onSave)="cancelNewItem()" *ngIf="showNewItem"></task-list-item-editor>
-			<task-list-item *ngFor="let item of listItems" [item]="item" [path]="tasklist.$key"></task-list-item>
+			<task-list-item *ngFor="let item of listItems" [item]="item" [path]="tasklist.$key" [showComplete]="showComplete"></task-list-item>
 			<div *ngIf="tasklist && !tasklist.items">
 				No Items Yet
 			</div>

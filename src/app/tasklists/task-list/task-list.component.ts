@@ -1,29 +1,34 @@
-import { Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import {Component,Input,OnInit,OnChanges,OnDestroy,SimpleChanges,ElementRef} from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { TaskItem } from '../../global/_models/task-item.model';
 import { TaskList } from '../../global/_models/task-list.model';
 import {TaskListService} from "../../global/_services/task-list.service";
+import {ShowCompletePipe} from "../../global/_pipes/show-complete.pipe";
 
 @Component({
   selector: 'task-list',
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.less']
+  styleUrls: ['./task-list.component.less'],
+	host: {
+		'(document:click)': 'onOuterClick($event)',
+	},
 })
 export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
-	constructor(private TaskListService:TaskListService) { }
+	constructor(private TaskListService:TaskListService,private _eref:ElementRef,private ShowCompletePipe: ShowCompletePipe) { }
 	
 	@Input() list: TaskList;
 	
-	editMode: Boolean = false;
+	editMode: boolean = false;
 	listItems$: any;
 	listItems: Array<TaskItem>;
-	listMembers$:any;
+	listMembers$: any;
 	newItem: TaskItem = {
 		name: ''
 		,completed: false
 	};
-	menuOpen: Boolean = false;
-	showNewItem:Boolean = false;
+	menuOpen: boolean = false;
+	showComplete: boolean = false;
+	showNewItem: boolean = false;
 	tasklist$: any;
 	tasklist: TaskList;
 	
@@ -51,11 +56,12 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 		
 	deleteList() {
 		this.closeMenu();
-		
-		let listId:string = this.tasklist.$key;
-	
-		this.listMembers$ = this.TaskListService.getListRights('list2user',listId);
-		this.listMembers$.subscribe(data => this.deleteListForUsers(data,listId));
+		if (confirm('Are you sure?  This cannot be undone!')) {
+			let listId:string = this.tasklist.$key;
+			
+			this.listMembers$ = this.TaskListService.getListRights('list2user',listId);
+			this.listMembers$.subscribe(data => this.deleteListForUsers(data,listId));
+		}
 	}
 	deleteListForUsers(members,listId) {
 		this.tasklist$.remove();
@@ -74,7 +80,7 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	
 	loadItems() {
 		this.listItems$ = this.TaskListService.getItems(this.list.$key);
-		this.listItems$.subscribe(data => this.listItems = data)
+		this.listItems$.subscribe(this.setListItems.bind(this));
 	}
 	
 	loadList() {
@@ -90,11 +96,26 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 		this.editMode = false;
 	}
 	
+	onOuterClick(event) {
+		if (!this._eref.nativeElement.contains(event.target)) {
+			this.closeMenu();
+		}
+	}
+	
+	setListItems(data) {
+		//let scp = new ShowCompletePipe();
+		this.listItems = !this.showComplete ? this.ShowCompletePipe.transform(data) : data;
+	}
+	
 	showNewItemForm() {
 		this.showNewItem = true;
 	}
 	
 	toggleMenu() {
 		this.menuOpen = !this.menuOpen;
+	}
+	toggleShowComplete() {
+		this.closeMenu();
+		this.showComplete = !this.showComplete;
 	}
 }

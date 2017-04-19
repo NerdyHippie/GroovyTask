@@ -1,3 +1,4 @@
+@import "../../../mixins/mixins";
 @import "../../../mixins/palette";
 
 .item-wrapper {
@@ -6,6 +7,10 @@
 	background-color: @bkgBlue;
 	padding: 3px;
 	margin-bottom: 5px;
+	
+	.item-body {
+		position: relative;
+	}
 	
 	.btn-sm {
 		margin-top: 0.13rem;
@@ -19,10 +24,38 @@
 	}
 }
 
+.item-text {
+	margin-left: -.2rem;
+}
+
+.complete {
+	color: @black25;
+	text-decoration: line-through;
+}
+
+.fa-square {
+	color: @black25; //fade(@black,40%);
+}
+
 .subitems {
 	margin-left: 3px;
 	padding-left: 3px;
 	border-left: 1px solid @black50;
 	margin-bottom: -5px;
 	margin-top: 0.18rem;
+}
+.item-menu {
+	border: 1px solid @black25;
+	background-color: @white;
+	.drop-shadow(2px,2px,5px,3px);
+	.border-radius(4px);
+	position: absolute;
+	top: 20px;
+	right: 5px;
+	text-align: left;
+	z-index: 100;
+	button {
+		text-align: left;
+		width: 100%;
+	}
 }

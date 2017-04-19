@@ -27,6 +27,9 @@ import { TaskListItemComponent } from './tasklists/task-list-item/task-list-item
 // Global Services
 import { AlertService,AuthenticationService,Logger,TaskListService,UserService,UtilService } from './global/_services/index';
 
+// Pipes
+import { ShowCompletePipe } from './global/_pipes/index'
+
 // Environment
 import { environment } from '../environments/environment';
 import { TaskListItemEditorComponent } from './tasklists/task-list-item-editor/task-list-item-editor.component';
@@ -70,7 +73,8 @@ export const PrimeModules: Array<any> = [CalendarModule,EditorModule,GlobalModul
     Logger,
 	  TaskListService,
     UserService,
-    UtilService
+    UtilService,
+	  ShowCompletePipe
   ],
   bootstrap: [AppComponent]
 })

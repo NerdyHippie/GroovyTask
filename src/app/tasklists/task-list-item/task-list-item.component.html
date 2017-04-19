@@ -1,11 +1,22 @@
 <div class="item-wrapper" *ngIf="item">
 	<div class="item-body">
-		<!--<div class="small">{{path}}</div>-->
+		<div class="item-menu" *ngIf="menuOpen">
+			<button class="btn btn-link btn-sm" (click)="editItem()" [disabled]="edit"><i class="fa fa-pencil"></i> Edit</button>
+			<button class="btn btn-link btn-sm" (click)="showNewItemForm()" [disabled]="showNewItem"><i class="fa fa-pencil"></i> New subitem</button>
+			<button class="btn btn-link btn-sm" (click)="deleteItem()"><i class="fa fa-times"></i> Delete</button>
+		</div>
 		<div *ngIf="!edit">
-			<button type="button" class="btn btn-sm btn-default pull-right" (click)="showNewItemForm()">
-				<i class="fa fa-plus" title="New Item"></i>
+			<button type="button" class="btn btn-sm btn-default pull-right" (click)="toggleMenu()">
+				<i class="fa fa-bars" title="Open Menu"></i>
 			</button>
-			<div (click)="editItem()">{{item.name}}</div>
+			<div [ngClass]="{'complete':item.completed}">
+				<i class="fa fa-fw fa-square" *ngIf="!canMarkComplete()"></i>
+				<span *ngIf="canMarkComplete()">
+					<i class="fa fa-fw fa-square-o" (click)="markCompleted()" *ngIf="!item.completed"></i>
+					<i class="fa fa-fw fa-check-square-o" (click)="markIncomplete()" *ngIf="item.completed"></i>
+				</span>
+				<span class="item-text" (click)="editItem()">{{item.name}}</span>
+			</div>
 			<div *ngIf="showNewItem" class="subitems">
 				<task-list-item-editor [item]="newItem" [path]="getItemPath()" (onCancel)="onNewItemCancel()" (onSave)="onNewItemSave()"></task-list-item-editor>
 			</div>
@@ -14,7 +25,7 @@
 			<task-list-item-editor [item]="item" [path]="getItemPath()" (onCancel)="onEditCancel()" (onSave)="onEditSave()"></task-list-item-editor>
 		</div>
 		<div *ngIf="item.items" class="subitems">
-			<task-list-item *ngFor="let subitem of subitems" [item]="subitem" [path]="getItemPath()"></task-list-item>
+			<task-list-item *ngFor="let subitem of subitems" [item]="subitem" [path]="getItemPath()" [showComplete]="showComplete"></task-list-item>
 		</div>
 	</div>
 </div>
