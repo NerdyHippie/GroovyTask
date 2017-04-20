@@ -7,6 +7,7 @@ import { AngularFireModule } from 'angularfire2';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule,EditorModule,SharedModule} from 'primeng/primeng';
 import 'hammerjs'
+import {DragulaModule} from "ng2-dragula";
 
 // App Routing
 import { AppRouting,AppRoutingComponents } from './app.routing';
@@ -54,6 +55,7 @@ export const PrimeModules: Array<any> = [CalendarModule,EditorModule,GlobalModul
     ,AdminModule
     ,GlobalModule
 	  ,TestModule
+	  ,DragulaModule
   ],
   declarations: [
     AppComponent,

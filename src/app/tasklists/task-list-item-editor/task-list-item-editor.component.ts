@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {AfterViewInit,Component,EventEmitter,Input,OnInit,Output,ViewChildren} from '@angular/core';
 import {Observable} from "rxjs";
 import {TaskItem} from "../../global/_models/task-item.model";
 import {TaskListService} from "../../global/_services/task-list.service";
@@ -10,7 +10,7 @@ import {Logger} from "../../global/_services/logger.service";
   templateUrl: './task-list-item-editor.component.html',
   styleUrls: ['./task-list-item-editor.component.less']
 })
-export class TaskListItemEditorComponent implements OnInit {
+export class TaskListItemEditorComponent implements AfterViewInit,OnInit {
 
   constructor(private TaskListService:TaskListService,private Logger:Logger) { }
 	
@@ -19,10 +19,14 @@ export class TaskListItemEditorComponent implements OnInit {
   @Output() onCancel: EventEmitter<any> = new EventEmitter();
   @Output() onSave: EventEmitter<any> = new EventEmitter();
   
+  @ViewChildren('itemName') vc;
+  
 	originalData: TaskItem;
 	errorData:any = {};
-  
-
+ 
+	ngAfterViewInit() {
+		this.vc.first.nativeElement.focus();
+	}
   ngOnInit() {
 	  this.originalData = Object.assign({},this.item);
 	  delete this.originalData.items;
@@ -38,11 +42,12 @@ export class TaskListItemEditorComponent implements OnInit {
   }
 
   createItem() {
+  	console.log('create item');
 		let itemList = this.TaskListService.getItems(this.path);
 	  itemList.push(this.item);
-		this.onSave.emit();
+		this.doSubmitSuccess(this.item);
   }
-   
+  
   doSubmitError(error) {
   	this.errorData = {};
   	
@@ -56,6 +61,7 @@ export class TaskListItemEditorComponent implements OnInit {
   }
   
   doSubmitSuccess(data) {
+  	console.log('submit success');
  	  this.onSave.emit();
   }
   

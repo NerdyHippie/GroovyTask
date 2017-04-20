@@ -20,6 +20,7 @@ export class TaskListItemComponent implements OnInit {
 	@Input() path: string;
 	@Input() edit: boolean = false;
 	@Input() showComplete: boolean = false;
+	@Input() subitemsOpen: Array<string> = [];
 	
 	item$: any;
 	menuOpen: boolean = false;
@@ -32,6 +33,9 @@ export class TaskListItemComponent implements OnInit {
 	subitems: Array<TaskItem>;
 	
 	ngOnInit() {
+		console.log('init item',this.getItemPath());
+		this.showNewItem = (this.subitemsOpen.indexOf(this.getItemPath()) != -1);
+		
 		this.loadItem();
 		this.loadSubItems();
 	}
@@ -101,10 +105,16 @@ export class TaskListItemComponent implements OnInit {
 	}
 	onNewItemCancel() {
 		this.showNewItem = false;
+		this.subitemsOpen.splice(this.subitemsOpen.indexOf(this.getItemPath()),1)
 	}
 	onNewItemSave() {
 		// TODO: Add a user control to toggle the default of this behaviour
-		this.showNewItem = true;
+		this.newItem = {
+			name: ''
+			,completed: false
+		};
+		//this.showNewItem = true;
+		console.log('onNewItemSave()',this.getItemPath(),this.showNewItem);
 	}
 	onOuterClick(event) {
 		if (!this._eref.nativeElement.contains(event.target)) {
@@ -117,6 +127,7 @@ export class TaskListItemComponent implements OnInit {
 	}
 	showNewItemForm() {
 		this.closeMenu();
+		if (this.subitemsOpen.indexOf(this.getItemPath()) == -1) this.subitemsOpen.push(this.getItemPath());
 		this.showNewItem = true;
 		
 	}

@@ -29,6 +29,7 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	menuOpen: boolean = false;
 	showComplete: boolean = false;
 	showNewItem: boolean = false;
+	subitemsOpen: Array<string> = [];
 	tasklist$: any;
 	tasklist: TaskList;
 	
@@ -41,19 +42,12 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	}
 	ngOnDestroy() {}
 	
-	cancelNewItem() {
-		//console.log('cancelNewItem from task-list')
-		this.showNewItem = false;
-		this.newItem = {
-			name: ''
-			,completed: false
-		};
-	}
+	
 	
 	closeMenu() {
 		if (this.menuOpen) this.menuOpen = false;
 	}
-		
+	
 	deleteList() {
 		this.closeMenu();
 		if (confirm('Are you sure?  This cannot be undone!')) {
@@ -90,6 +84,18 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	
 	onCancelListEdit() {
 		this.editMode = false;
+	}
+	
+	onCancelNewItem() {
+		//console.log('onCancelNewItem from task-list')
+		this.showNewItem = false;
+	}
+	
+	onSaveNewItem() {
+		this.newItem = {
+			name: ''
+			,completed: false
+		};
 	}
 	
 	onListSave() {

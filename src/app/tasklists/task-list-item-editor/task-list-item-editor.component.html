@@ -1,6 +1,6 @@
 <form *ngIf="item" class="item-editor" (submit)="save()">
 	
-	<input type="text" class="form-control" name="mame" [(ngModel)]="item.name" placeholder="{{getPlaceholder()}}">
+	<input #itemName type="text" class="form-control" name="mame" [(ngModel)]="item.name" placeholder="{{getPlaceholder()}}">
 	<div class="alert alert-danger" *ngIf="errorData.name">{{errorData.name}}</div>
 	
 	<div class="alert alert-danger" *ngIf="errorData.submitError">{{errorData.submitError}}</div>

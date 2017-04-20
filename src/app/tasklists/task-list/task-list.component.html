@@ -22,8 +22,10 @@
 				<i class="fa fa-plus float-right" title="New Item" (click)="showNewItemForm()"></i>
 				Items
 			</div>
-			<task-list-item-editor [item]="newItem" [path]="tasklist.$key" (onCancel)="cancelNewItem()" (onSave)="cancelNewItem()" *ngIf="showNewItem"></task-list-item-editor>
-			<task-list-item *ngFor="let item of listItems" [item]="item" [path]="tasklist.$key" [showComplete]="showComplete"></task-list-item>
+			<task-list-item-editor [item]="newItem" [path]="tasklist.$key" (onCancel)="onCancelNewItem()" (onSave)="onSaveNewItem()" *ngIf="showNewItem"></task-list-item-editor>
+			<div [dragula]='"bag-one"'>
+				<task-list-item *ngFor="let item of listItems" [item]="item" [path]="tasklist.$key" [showComplete]="showComplete" [subitemsOpen]="subitemsOpen"></task-list-item>
+			</div>
 			<div *ngIf="tasklist && !tasklist.items">
 				No Items Yet
 			</div>
