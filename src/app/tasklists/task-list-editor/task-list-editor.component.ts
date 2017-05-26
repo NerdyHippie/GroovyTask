@@ -6,6 +6,7 @@ import {TaskListService} from "../../global/_services/task-list.service";
 import {Logger} from "../../global/_services/logger.service";
 import {UserService} from "../../global/_services/user.service";
 import {User} from "../../global/_models/user.model";
+import {UtilService} from "../../global/_services/utils.service";
 
 
 @Component({
@@ -15,7 +16,7 @@ import {User} from "../../global/_models/user.model";
 })
 export class TaskListEditorComponent implements OnInit {
 
-  constructor(private TaskListService:TaskListService,private UserService:UserService,private Logger:Logger) { }
+  constructor(private TaskListService:TaskListService,private UserService:UserService,private UtilService:UtilService,private Logger:Logger) { }
   
   @Input() list: TaskList;
 	@Output() onCancel: EventEmitter<any> = new EventEmitter();
@@ -74,7 +75,7 @@ export class TaskListEditorComponent implements OnInit {
 	
 	save() {
   	console.log('save list',this.list);
-		this.list = this.TaskListService.scrubData(this.list);
+		this.list = this.UtilService.scrubData(this.list);
 		this.list.$key ? this.updateList() : this.createList();
 	}
 	

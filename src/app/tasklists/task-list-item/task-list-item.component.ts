@@ -33,7 +33,7 @@ export class TaskListItemComponent implements OnInit {
 	subitems: Array<TaskItem>;
 	
 	ngOnInit() {
-		console.log('init item',this.getItemPath());
+		//console.log('init item',this.getItemPath());
 		this.showNewItem = (this.subitemsOpen.indexOf(this.getItemPath()) != -1);
 		
 		this.loadItem();

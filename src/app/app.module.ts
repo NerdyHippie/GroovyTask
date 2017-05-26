@@ -21,9 +21,12 @@ import { TestModule } from './test/test.module';
 // Components
 import { AppComponent }  from './app.component';
 import { NavBarComponent }  from './core/nav-bar/nav-bar.component';
-import { TaskListManagerComponent } from './tasklists/task-list-manager.component';
+//import { TaskListManagerComponent } from './tasklists/task-list-manager.component';
 import { TaskListComponent } from './tasklists/task-list/task-list.component';
 import { TaskListItemComponent } from './tasklists/task-list-item/task-list-item.component';
+import { TaskListItemEditorComponent } from './tasklists/task-list-item-editor/task-list-item-editor.component';
+import { TaskListEditorComponent } from './tasklists/task-list-editor/task-list-editor.component';
+//import { CheckOffManagerComponent } from './checkoffs/check-off-manager.component';
 
 // Global Services
 import { AlertService,AuthenticationService,Logger,TaskListService,UserService,UtilService } from './global/_services/index';
@@ -33,8 +36,11 @@ import { ShowCompletePipe } from './global/_pipes/index'
 
 // Environment
 import { environment } from '../environments/environment';
-import { TaskListItemEditorComponent } from './tasklists/task-list-item-editor/task-list-item-editor.component';
-import { TaskListEditorComponent } from './tasklists/task-list-editor/task-list-editor.component';
+import {CheckOffService} from "./global/_services/check-off.service";
+import { CheckOffItemComponent } from './checkoffs/check-off-item/check-off-item.component';
+import { CheckOffItemEditorComponent } from './checkoffs/check-off-item-editor/check-off-item-editor.component';
+import { CheckOffHistoryComponent } from './checkoffs/check-off-history/check-off-history.component';
+import { CheckOffHistoryItemComponent } from './checkoffs/check-off-history-item/check-off-history-item.component';
 
 
 // Concatenate Components here for readability
@@ -62,16 +68,22 @@ export const PrimeModules: Array<any> = [CalendarModule,EditorModule,GlobalModul
     CoreComponents,
     AppRoutingComponents,
     TaskListComponent,
-    TaskListManagerComponent,
+    //TaskListManagerComponent,
     TaskListItemComponent,
     TaskListItemEditorComponent,
-    TaskListEditorComponent
+    TaskListEditorComponent,
+    CheckOffItemComponent,
+    CheckOffItemEditorComponent,
+    CheckOffHistoryComponent,
+    CheckOffHistoryItemComponent,
+    //CheckOffManagerComponent
   ],
   
   providers: [
     AuthGuard,
     AlertService,
     AuthenticationService,
+	  CheckOffService,
     Logger,
 	  TaskListService,
     UserService,

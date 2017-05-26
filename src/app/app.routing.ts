@@ -13,46 +13,55 @@ import { EmailActionComponent } from './core/email-action/email-action.component
 import { UserDetailComponent } from './admin/user-detail/user-detail.component';
 import { UserEditorComponent } from './admin/user-editor/user-editor.component';
 import { TaskListManagerComponent } from './tasklists/task-list-manager.component';
+import { CheckOffManagerComponent } from './checkoffs/check-off-manager.component';
 
 const appRoutes: Routes = [
-    {
-        path: ''
-        ,component: HomeComponent
-				,canActivate: [ AuthGuard ]
-    },{
-        path: 'tasklists'
-        ,component: TaskListManagerComponent
-				,canActivate: [ AuthGuard ]
-    },{
-        path: 'calendar'
-        ,component: CalendarComponent
-				,canActivate: [ AuthGuard ]
-    },{
-				path: 'profile/:id'
-				,component: UserDetailComponent
-				,canActivate: [ AuthGuard ]
-		},{
-				path: 'profile/edit/:id'
-				,component: UserEditorComponent
-				,canActivate: [ AuthGuard ]
-		},{
-        path: 'login'
-        ,component: LoginComponent
-    },{
-        path: 'logout'
-        ,component: LogoutComponent
-    },{
-        path: 'register'
-        ,component: RegisterComponent
-    },{
-        path: 'reset'
-        ,component: ResetRequestComponent
-    },{
-        path: 'emailAction'
-        ,component: EmailActionComponent
-				,pathMatch: 'prefix'
-    }
+	{
+		path: ''
+		,component: CheckOffManagerComponent
+		,canActivate: [AuthGuard]
+	},{
+		path: 'home'
+		,component: HomeComponent
+		,canActivate: [AuthGuard]
+	},{
+		path: 'checkoffs'
+		,component: CheckOffManagerComponent
+		,canActivate: [AuthGuard]
+	},{
+		path: 'tasklists'
+		,component: TaskListManagerComponent
+		,canActivate: [AuthGuard]
+	},{
+		path: 'calendar'
+		,component: CalendarComponent
+		,canActivate: [AuthGuard]
+	},{
+		path: 'profile/:id'
+		,component: UserDetailComponent
+		,canActivate: [AuthGuard]
+	},{
+		path: 'profile/edit/:id'
+		,component: UserEditorComponent
+		,canActivate: [AuthGuard]
+	},{
+		path: 'login'
+		,component: LoginComponent
+	},{
+		path: 'logout'
+		,component: LogoutComponent
+	},{
+		path: 'register'
+		,component: RegisterComponent
+	},{
+		path: 'reset'
+		,component: ResetRequestComponent
+	},{
+		path: 'emailAction'
+		,component: EmailActionComponent
+		,pathMatch: 'prefix'
+	}
 ];
 
-export const AppRoutingComponents = [HomeComponent,CalendarComponent,LoginComponent,LogoutComponent,RegisterComponent,ResetRequestComponent,EmailActionComponent,TaskListManagerComponent];
+export const AppRoutingComponents = [HomeComponent,CalendarComponent,LoginComponent,LogoutComponent,RegisterComponent,ResetRequestComponent,EmailActionComponent,TaskListManagerComponent,CheckOffManagerComponent];
 export const AppRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes);

@@ -4,6 +4,7 @@ import {TaskItem} from "../../global/_models/task-item.model";
 import {TaskListService} from "../../global/_services/task-list.service";
 import {TaskList} from "../../global/_models/task-list.model";
 import {Logger} from "../../global/_services/logger.service";
+import {UtilService} from "../../global/_services/utils.service";
 
 @Component({
   selector: 'task-list-item-editor',
@@ -12,7 +13,7 @@ import {Logger} from "../../global/_services/logger.service";
 })
 export class TaskListItemEditorComponent implements AfterViewInit,OnInit {
 
-  constructor(private TaskListService:TaskListService,private Logger:Logger) { }
+  constructor(private TaskListService:TaskListService,private UtilService:UtilService,private Logger:Logger) { }
 	
 	@Input() item:TaskItem;
   @Input() path: string;
@@ -85,7 +86,7 @@ export class TaskListItemEditorComponent implements AfterViewInit,OnInit {
   save() {
   	console.log('Firing Save for ',this.item);
   	if (this.validate()) {
-		  this.item = this.TaskListService.scrubData(this.item);
+		  this.item = this.UtilService.scrubData(this.item);
 		  this.item.$key ? this.updateItem() : this.createItem();
 	  }
   }

@@ -18,17 +18,23 @@
 			<task-list-editor [list]="list" (onCancel)="onCancelListEdit()" (onSave)="onListSave()"></task-list-editor>
 		</div>
 		<div class="list-items">
+			
 			<div class="item-header">
 				<i class="fa fa-plus float-right" title="New Item" (click)="showNewItemForm()"></i>
 				Items
 			</div>
-			<task-list-item-editor [item]="newItem" [path]="tasklist.$key" (onCancel)="onCancelNewItem()" (onSave)="onSaveNewItem()" *ngIf="showNewItem"></task-list-item-editor>
-			<div [dragula]='"bag-one"'>
+			
+			<div [dragula]='"bag-one"' [dragulaModel]="listItems">
 				<task-list-item *ngFor="let item of listItems" [item]="item" [path]="tasklist.$key" [showComplete]="showComplete" [subitemsOpen]="subitemsOpen"></task-list-item>
 			</div>
+			
 			<div *ngIf="tasklist && !tasklist.items">
 				No Items Yet
 			</div>
+			
+			<task-list-item-editor [item]="newItem" [path]="tasklist.$key" (onCancel)="onCancelNewItem()" (onSave)="onSaveNewItem()" *ngIf="showNewItem"></task-list-item-editor>
 		</div>
+		
+		<pre>{{listItems | json}}</pre>
 	</div>
 </div>

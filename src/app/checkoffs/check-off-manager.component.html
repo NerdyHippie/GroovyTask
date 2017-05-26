@@ -1,0 +1,9 @@
+<h2>CheckOffs</h2>
+<section class="check-offs-container">
+	<check-off-item *ngFor="let item of myItems | sort:byName" [item]="item"></check-off-item>
+</section>
+
+<check-off-item-editor [item]="newItem" (onCancel)="onNewItemCancel()" (onSave)="onNewItemSave()"></check-off-item-editor>
+
+<check-off-history></check-off-history>
+

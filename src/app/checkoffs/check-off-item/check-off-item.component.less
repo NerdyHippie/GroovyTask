@@ -1,0 +1,25 @@
+@import '../../../mixins/palette';
+@import '../../../mixins/mixins';
+
+.check-off-item {
+	background-color: @white;
+	border: 1px solid @black25;
+	.border-radius(4px);
+	padding: 4px 8px;
+	margin-bottom: 4px;
+	
+	transition: background-color 1s ease;
+}
+
+.archived {
+	border-color: @red50;
+	color: @black50;
+}
+
+.checking {
+	background-color: orange;
+}
+
+.checked {
+	background-color: lawngreen;
+}

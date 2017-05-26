@@ -1,0 +1,4 @@
+<div class="check-off-item" [ngClass]="{'archived':item.archived,'checking':checking,'checked':checked}" (click)="doCheckOff()">
+	{{item.name}} <span *ngIf="checking"><i class="fa fa-spinner fa-pulse"></i> Marking as checked off</span>
+	<span *ngIf="checked">CHECKED</span>
+</div>

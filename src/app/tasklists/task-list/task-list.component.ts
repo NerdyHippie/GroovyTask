@@ -1,9 +1,10 @@
-import {Component,Input,OnInit,OnChanges,OnDestroy,SimpleChanges,ElementRef} from '@angular/core';
+import {Component,Input,OnInit,OnChanges,OnDestroy,SimpleChanges,ElementRef,Renderer2} from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { TaskItem } from '../../global/_models/task-item.model';
 import { TaskList } from '../../global/_models/task-list.model';
 import {TaskListService} from "../../global/_services/task-list.service";
 import {ShowCompletePipe} from "../../global/_pipes/show-complete.pipe";
+import {DragulaService} from "ng2-dragula";
 
 @Component({
   selector: 'task-list',
@@ -14,7 +15,20 @@ import {ShowCompletePipe} from "../../global/_pipes/show-complete.pipe";
 	},
 })
 export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
-	constructor(private TaskListService:TaskListService,private _eref:ElementRef,private ShowCompletePipe: ShowCompletePipe) { }
+	constructor(private TaskListService:TaskListService,private renderer:Renderer2,private _eref:ElementRef,private ShowCompletePipe: ShowCompletePipe,private dragulaService:DragulaService) {
+		/*dragulaService.drop.subscribe((value) => {
+			console.warn(`drop: ${value[0]}`,value);
+			this.onDrop(value.slice(1));
+		});*/
+		dragulaService.dropModel.subscribe((value) => {
+			console.warn(`dropModel: ${value[0]}`,value.slice(1));
+			this.onDropModel(value.slice(1));
+		});
+		dragulaService.removeModel.subscribe((value) => {
+			console.warn(`removeModel: ${value[0]}`);
+			this.onRemoveModel(value.slice(1));
+		});
+	}
 	
 	@Input() list: TaskList;
 	
@@ -89,6 +103,36 @@ export class TaskListComponent implements OnInit,OnChanges,OnDestroy {
 	onCancelNewItem() {
 		//console.log('onCancelNewItem from task-list')
 		this.showNewItem = false;
+	}
+	
+	private onDrop(args) {
+		let [e, el, target,source,sibling] = args;
+		console.log('item dropped');
+		console.log(e);
+		console.log(el);
+		
+		// do something
+	}
+	private onDropModel(args) {
+		let [bagName,el,target,source] = args;
+		console.log('item dropped in %o',bagName);
+		console.log(el);
+		console.log(target);
+		console.log(source);
+		
+		let elmt = this.renderer.selectRootElement(el);
+		this.renderer.setStyle(elmt,'border','1px solid red');
+		console.log('moved element',elmt);
+		// do something
+	}
+	private onRemoveModel(args) {
+		let [bagName,el,target,source] = args;
+		console.log('item removed in %o',bagName);
+		console.log(el);
+		console.log(target);
+		console.log(source);
+		
+		// do something
 	}
 	
 	onSaveNewItem() {

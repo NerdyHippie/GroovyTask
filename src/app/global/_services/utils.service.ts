@@ -24,5 +24,15 @@ export class UtilService {
 		
 		*/
 	}
-
+	
+	public scrubData(input) {
+		for (let key in input) {
+			if (input.hasOwnProperty(key) && key.substr(0,1) != '$') {
+				if (input[key] == '') {
+					input[key] = null;
+				}
+			}
+		}
+		return input;
+	}
 }
