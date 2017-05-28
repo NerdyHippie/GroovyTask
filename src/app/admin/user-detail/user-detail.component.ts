@@ -1,6 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
-import { FirebaseObjectObservable } from 'angularfire2';
+import { FirebaseObjectObservable } from 'angularfire2/database';
 import { User } from '../../global/_models/user.model';
 import { UserService } from '../../global/_services/user.service';
 import {Subscription} from "rxjs";

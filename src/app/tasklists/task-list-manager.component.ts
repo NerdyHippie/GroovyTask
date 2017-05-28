@@ -35,8 +35,7 @@ export class TaskListManagerComponent implements OnInit {
   
   loadMyLists(userData) {
   	//console.log('loading list data for user',userData);
-	  this.myLists$ = this.TaskListService.getListsForUser(userData.uid);
-	  this.myLists$.subscribe(data => {
+	  this.myLists$ = this.TaskListService.getListsForUser(userData.uid).subscribe(data => {
 		  //console.log('myLists$',data);
 		  this.myLists = data
 	  });
@@ -44,6 +43,7 @@ export class TaskListManagerComponent implements OnInit {
   
 	ngOnDestroy() {
 		//this.tasklists$.unsubscribe();
+		console.log('destroy myLists$',this.myLists$);
 		this.myLists$.unsubscribe();
 	}
 	
@@ -58,7 +58,7 @@ export class TaskListManagerComponent implements OnInit {
 	onNewListSave() {
   	this.onNewListCancel();
 	}
-  
+ 
 	showNewListForm() {
   	this.newListFormVisible = true;
 	}

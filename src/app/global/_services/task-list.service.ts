@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AngularFire,FirebaseListObservable } from 'angularfire2';
+import { AngularFireDatabase,FirebaseListObservable } from 'angularfire2/database';
 import { Logger } from './logger.service'
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import 'rxjs/add/operator/map';
@@ -11,20 +11,20 @@ export class TaskListService {
 	tasklists$: FirebaseListObservable<any>;
 	currentUser: any;
 	
-	constructor(private af: AngularFire,private UserService:UserService,private logger:Logger) {
+	constructor(private db: AngularFireDatabase,private UserService:UserService,private logger:Logger) {
 		this.initialize();
 	}
 	
 	private initialize():void {
-		this.tasklists$ = this.af.database.list('/tasklists');
+		this.tasklists$ = this.db.list('/tasklists');
 		this.UserService.currentUser.subscribe((data:any) => this.currentUser = data);
 	}
 	
 	public getItem(path:string):any {
-		return this.af.database.object('/tasklists/' + path);
+		return this.db.object('/tasklists/' + path);
 	}
 	public getItems(path:string):any {
-		return this.af.database.list('/tasklists/' + path + '/items');
+		return this.db.list('/tasklists/' + path + '/items');
 	}
 	
 	public getListRights(type:string,listId:string,userId?:String) {
@@ -42,21 +42,21 @@ export class TaskListService {
 				break;
 		}
 		
-		return this.af.database.object(path);
+		return this.db.object(path);
 	}
 	
 	public getListsForUser(userId:String):any {
 		//console.log('getMyLists()',this.currentUser);
-		return this.af.database.list('/listRights/user2list/'+userId);
+		return this.db.list('/listRights/user2list/'+userId);
 	}
 	
 	public getTasklists():any {
 		let path = '/tasklists';
-		return this.af.database.list(path);
+		return this.db.list(path);
 	}
 	public getTasklist(listId:string):any {
 		let path = '/tasklists/'+listId;
-		return this.af.database.object(path);
+		return this.db.object(path);
 	}
 	
 	

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router,ActivatedRoute,Params } from "@angular/router";
-import { AngularFire } from 'angularfire2';
+//import { AngularFire } from 'angularfire2';
 import { AlertService } from "../../global/_services/alert.service";
 import * as firebase from 'firebase';
 
@@ -25,7 +25,7 @@ export class EmailActionComponent implements OnInit {
 		
 		
     constructor(
-    	private af:AngularFire,
+    	//private af:AngularFire,
 			private activatedRoute:ActivatedRoute,
 			private alertService:AlertService,
 			private router:Router
@@ -82,8 +82,8 @@ export class EmailActionComponent implements OnInit {
 		}
 	
 		handleRecoverEmail() {
-    	
-    	
+   
+   
 			/*var restoredEmail = null;
 			// Confirm the action code is valid.
 			auth.checkActionCode(actionCode).then(function(info) {
@@ -121,5 +121,5 @@ export class EmailActionComponent implements OnInit {
 				// again.
 			});*/
 		}
-    
+  
 }

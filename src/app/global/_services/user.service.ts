@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import { AngularFire,FirebaseListObservable } from 'angularfire2';
 import { Logger } from './logger.service'
 import { User } from '../_models/user.model';
 import * as moment from 'moment'
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
+import {AngularFireDatabase,FirebaseListObservable} from "angularfire2/database";
 
 export interface NewUserData {
 	uid?: string
@@ -23,19 +23,19 @@ export class UserService {
 	userList$: FirebaseListObservable<any>;
 	currentUser: ReplaySubject<any> = new ReplaySubject(1);
 	
-	constructor(private af: AngularFire,private logger:Logger) {
+	constructor(private db: AngularFireDatabase,private logger:Logger) {
 		this.initialize();
 	}
 	
 	private initialize():void {
-		this.userList$ = this.af.database.list('/users');
+		this.userList$ = this.db.list('/users');
 	}
 	
 	
 	
 	getUser(userId:String):any {
 		let path = '/users/'+userId;
-		return this.af.database.object(path);
+		return this.db.object(path);
 	}
 	
 	loadCurrentUser(authData:any) {
@@ -57,18 +57,18 @@ export class UserService {
 	
 	setUserAccount(authData:any) {
 		this.logger.log('set account',authData);
-		
-		let providerData = authData.auth.providerData; //[0];
+		//console.log('in setUserAccount',authData);
+		let providerData = authData.providerData; //[0];
 		
 		let userData:any = {
 			uid: authData.uid
-			,email: authData.auth.email
+			,email: authData.email
 			//,providerId: providerData.providerId
 			,lastLogin: moment().format()
 			//,providerUid: providerData.uid
-			,providers: this.makeProviderObj(authData.auth.providerData)
-			,photoURL: authData.auth.photoURL || 'http://simpleicon.com/wp-content/uploads/user1.png'
-			,displayName: authData.auth.displayName
+			,providers: this.makeProviderObj(authData.providerData)
+			,photoURL: authData.photoURL || 'http://simpleicon.com/wp-content/uploads/user1.png'
+			,displayName: authData.displayName
 		};
 		
 		/* Ended up not needing this, but it's handy to know...
@@ -79,11 +79,11 @@ export class UserService {
 		};*/
 		
 		
-		if (authData.auth.firstName) userData.firstName = authData.auth.firstName;
-		if (authData.auth.lastName) userData.lastName = authData.auth.lastName;
+		if (authData.firstName) userData.firstName = authData.firstName;
+		if (authData.lastName) userData.lastName = authData.lastName;
 		
 		let usr = this.getUser(userData.uid);
-				
+		
 		let usr$ = usr.subscribe((user:any) => {
 			this.logger.log('usr exists?',user.$exists(),usr);
 			if (!user.$exists() || !user.dateCreated) {

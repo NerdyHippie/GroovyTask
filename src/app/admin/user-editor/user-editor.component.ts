@@ -47,7 +47,8 @@ export class UserEditorComponent extends UserDetailComponent implements OnInit,O
 	}
 	
 	openDetail() {
-		this.router.navigate(['../../'+this.savedUser.key]);
+		let path = '../../'+this.savedUser.key;
+		this.router.navigate([path],{relativeTo:this.activatedRoute});
 	}
 	
 	showLinkButton() {
@@ -67,5 +68,5 @@ export class UserEditorComponent extends UserDetailComponent implements OnInit,O
 	}
 	
 	
-    
+ 
 }

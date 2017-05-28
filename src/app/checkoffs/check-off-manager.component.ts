@@ -41,7 +41,7 @@ export class CheckOffManagerComponent implements OnInit {
 	
 	ngOnDestroy() {
 		//this.tasklists$.unsubscribe();
-		this.myItems$.unsubscribe();
+		//this.myItems$.unsubscribe();
 	}
 	
 	onNewItemCancel() {

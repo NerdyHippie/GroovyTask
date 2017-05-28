@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule,EditorModule,SharedModule} from 'primeng/primeng';
 import 'hammerjs'
@@ -55,6 +57,8 @@ export const PrimeModules: Array<any> = [CalendarModule,EditorModule,GlobalModul
     ReactiveFormsModule,
     HttpModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+	  AngularFireAuthModule,
+	  AngularFireDatabaseModule,
     NgbModule.forRoot()
     ,PrimeModules
     ,AppRouting

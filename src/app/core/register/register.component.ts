@@ -1,6 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFire } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
 
 import { UserService,AlertService } from '../../global/_services/index';
 
@@ -15,7 +16,7 @@ export class RegisterComponent {
 
     constructor(
         private router: Router,
-        private af: AngularFire,
+        private afAuth: AngularFireAuth,
         private alertService: AlertService,
 				private usrSvc: UserService
 		) { }
@@ -25,16 +26,16 @@ export class RegisterComponent {
     	if (f.valid) {
     		console.log('form is valid');
 				this.loading = true;
-				let regData = {
+				/*let regData = {
 					email: this.model.email
 					,password: this.model.password
-				};
-				this.af.auth.createUser(regData)
+				};*/
+				firebase.auth().createUserWithEmailAndPassword(this.model.email,this.model.password)
 					.then(this.registerSuccess.bind(this),this.registerFailure.bind(this));
 			} else {
     		console.log('not valid');
 			}
-    	
+    
     }
     
     private registerSuccess(data:any) {
