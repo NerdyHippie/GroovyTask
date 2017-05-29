@@ -23,6 +23,7 @@ export class TaskListItemComponent implements OnInit {
 	@Input() subitemsOpen: Array<string> = [];
 	
 	item$: any;
+	location: any;
 	menuOpen: boolean = false;
 	newItem: TaskItem = {
 		name: ''
@@ -38,6 +39,10 @@ export class TaskListItemComponent implements OnInit {
 		
 		this.loadItem();
 		this.loadSubItems();
+		
+		/*if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+		}*/
 	}
 	
 	ngOnChanges() {
@@ -86,9 +91,24 @@ export class TaskListItemComponent implements OnInit {
 	}
 	
 	markCompleted() {
-		console.log('mark completed');
+		//console.log('mark completed');
 		if (this.canMarkComplete()) {
-			this.item$.update({completed:true});
+			//console.log(this.location);
+			let updatePkg = {
+				completed:true,
+				location: {},
+			};
+			alert('complete!');
+			/*if (this.location) {
+				//console.log('save location',this.location.coords);
+				//Object.assign(updatePkg.location,this.location.coords);
+				for (let key in this.location.coords) {
+					//console.log(key);
+					updatePkg.location[key] = this.location.coords[key];
+				}
+			}*/
+			console.log('updatePkg',updatePkg);
+			this.item$.update(updatePkg);
 		}
 	}
 	
@@ -120,6 +140,15 @@ export class TaskListItemComponent implements OnInit {
 		if (!this._eref.nativeElement.contains(event.target)) {
 			this.closeMenu();
 		}
+	}
+	getPosition() {
+		/*if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition(position => {return position;});
+		}*/
+	}
+	setPosition(position) {
+		this.location = position;
+		//console.log('set position',position.coords);
 	}
 	setSubitems(data) {
 		//let scp = new ShowCompletePipe();
