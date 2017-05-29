@@ -1,6 +1,15 @@
 {
 	"rules": {
+		"checkOffs": {
+			".read": "auth.uid != null",
+			".write": "auth.uid != null",
+			
+			"checkedItems": {
+				".indexOn": ["completedDate"]
+			}
+		},
 		"users": {
+			".read": "auth.uid != null",
 			"$userId": {
 				".read": "auth.uid != null",
 				".write": "auth.uid == $userId"
