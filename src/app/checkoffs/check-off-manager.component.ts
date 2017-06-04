@@ -4,6 +4,7 @@ import {UserService} from "../global/_services/user.service";
 import {Logger} from "../global/_services/logger.service";
 import {CheckOffService} from "../global/_services/check-off.service";
 import {SortPipe} from "../global/_pipes/sort.pipe";
+import {LocationService} from "../global/_services/location.service";
 
 
 @Component({
@@ -12,7 +13,7 @@ import {SortPipe} from "../global/_pipes/sort.pipe";
   styleUrls: ['./check-off-manager.component.less']
 })
 export class CheckOffManagerComponent implements OnInit {
-	
+	loc: any;
 	myItems$: any;
 	myItems: Array<CheckOffItem>;
 	newItem: CheckOffItem = {
@@ -20,10 +21,11 @@ export class CheckOffManagerComponent implements OnInit {
 		archived: false
 	};
 	
-  constructor(private CheckOffService:CheckOffService,private UserService:UserService,private logger:Logger) { }
+  constructor(private CheckOffService:CheckOffService,private LocationService:LocationService,private UserService:UserService,private logger:Logger) { }
 
   ngOnInit() {
 	  this.UserService.currentUser.subscribe(usrData => this.loadMyItems(usrData));
+	  this.LocationService.location.subscribe(data => this.loc = data);
   }
 	
 	byName(a,b) {
@@ -53,5 +55,13 @@ export class CheckOffManagerComponent implements OnInit {
 	
 	onNewItemSave() {
 		this.onNewItemCancel();
+	}
+	
+	startTracking() {
+  	this.LocationService.startTrackingPosition();
+	}
+	
+	stopTracking() {
+    this.LocationService.stopTrackingPosition();
 	}
 }

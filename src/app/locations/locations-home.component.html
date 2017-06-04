@@ -1,0 +1,43 @@
+<section>
+	<h4>Add New Points</h4>
+	
+	<div>
+		Tracking: {{isTracking}}<br>
+		Current Pos: {{currentPosition.latitude}}   {{currentPosition.longitude}}<br>
+		Accuracy: {{currentPosition.accuracy}}
+	</div>
+	
+	<form (submit)="addLocation()">
+		<label>Point Name</label>
+		<input type="text" name="name" [(ngModel)]="formData.name" autofocus >
+		
+		<button type="submit">Save</button>
+		<button type="reset">Reset</button>
+	</form>
+</section>
+
+<section *ngIf="pendingAdds.length > 1">
+	<h4>Pending Adds</h4>
+	<ul>
+		<li *ngFor="let add of pendingAdds">{{add}}</li>
+	</ul>
+</section>
+
+<section *ngIf="savedPoints">
+	<h4>Saved Points</h4>
+	
+	<div class="point" *ngFor="let item of savedPoints">
+		<div class="point-time pull-right">{{item.timestamp}}</div>
+		<div class="point-name">{{item.name}}</div>
+		<div class="point-pos">
+			Accuracy: {{item.location.accuracy}}<br>
+			Latitude: {{item.location.latitude}}<br>
+			Longitude: {{item.location.longitude}}
+		</div>
+	</div>
+
+	<div *ngIf="!savedPoints.length">
+		No points saved yet.
+	</div>
+	
+</section>

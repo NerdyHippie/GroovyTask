@@ -1,7 +1,8 @@
 import {Component,Input,OnInit} from '@angular/core';
 import {CheckOffItem} from "../../global/_models/check-off-item.model";
-import {CheckOffService} from "../../global/_services/check-off.service";
+import {CheckOffService,LocationService} from "../../global/_services/index";
 import * as moment from "moment";
+//import {} from "../../global/_services/location.service";
 
 @Component({
   selector: 'check-off-item',
@@ -13,7 +14,7 @@ export class CheckOffItemComponent implements OnInit {
 	checking: boolean = false;
 	checked: boolean = false;
 	
-	constructor(private CheckOffService:CheckOffService) { }
+	constructor(private CheckOffService:CheckOffService,private LocationService:LocationService) { }
 
   ngOnInit() {}
   
@@ -23,7 +24,10 @@ export class CheckOffItemComponent implements OnInit {
 			parentId: this.item.$key,
 			name: this.item.name,
 			completedDate: moment().format(),
+			location: this.LocationService.makePositionObj()
 		};
+		
+		console.log('add checkoff obj',obj);
 		this.CheckOffService.getDayList().push(obj).then((savedData:any) => {
 			this.checking = false;
 			this.checked = true;
@@ -32,4 +36,6 @@ export class CheckOffItemComponent implements OnInit {
 		});
   }
 
+  
+  
 }

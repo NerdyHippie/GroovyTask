@@ -24,6 +24,7 @@ export class TaskListItemComponent implements OnInit {
 	
 	item$: any;
 	location: any;
+	locationData: any = {foo:'bar'};
 	menuOpen: boolean = false;
 	newItem: TaskItem = {
 		name: ''
@@ -96,18 +97,22 @@ export class TaskListItemComponent implements OnInit {
 			//console.log(this.location);
 			let updatePkg = {
 				completed:true,
-				location: {},
+				//location: {},
 			};
-			alert('complete!');
+			
 			/*if (this.location) {
+				this.locationData.locationExists = true;
 				//console.log('save location',this.location.coords);
 				//Object.assign(updatePkg.location,this.location.coords);
 				for (let key in this.location.coords) {
+					this.locationData[key] = this.location.coords[key];
 					//console.log(key);
 					updatePkg.location[key] = this.location.coords[key];
 				}
+			} else {
+				this.locationData.locationExists = false;
 			}*/
-			console.log('updatePkg',updatePkg);
+			//console.log('updatePkg',updatePkg);
 			this.item$.update(updatePkg);
 		}
 	}
@@ -141,15 +146,26 @@ export class TaskListItemComponent implements OnInit {
 			this.closeMenu();
 		}
 	}
+	/*getLocationDisplay() {
+		let ret:string = '';
+		if (this.location && this.location.coords) {
+			console.log(this.location.coords)
+			ret = "Location: " + this.location.coords.latitude + "," + this.location.coords.longitude + "   |  Accuracy: " + this.location.coords.accuracy;
+		} else {
+			ret = "No location data";
+		}
+		return ret;
+	}
 	getPosition() {
-		/*if(navigator.geolocation){
+		if(navigator.geolocation){
 			navigator.geolocation.getCurrentPosition(position => {return position;});
-		}*/
+		}
 	}
 	setPosition(position) {
 		this.location = position;
+		this.locationData.positionSet = true;
 		//console.log('set position',position.coords);
-	}
+	}*/
 	setSubitems(data) {
 		//let scp = new ShowCompletePipe();
 		this.subitems = !this.showComplete ? this.ShowCompletePipe.transform(data) : data;

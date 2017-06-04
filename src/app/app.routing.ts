@@ -10,15 +10,16 @@ import { LogoutComponent } from './core/logout/logout.component';
 import { RegisterComponent } from './core/register/register.component';
 import { ResetRequestComponent } from './core/reset-request/reset-request.component';
 import { EmailActionComponent } from './core/email-action/email-action.component';
+import { CheckOffManagerComponent } from './checkoffs/check-off-manager.component';
+import { LocationsHomeComponent } from './locations/locations-home.component';
+import { TaskListManagerComponent } from './tasklists/task-list-manager.component';
 import { UserDetailComponent } from './admin/user-detail/user-detail.component';
 import { UserEditorComponent } from './admin/user-editor/user-editor.component';
-import { TaskListManagerComponent } from './tasklists/task-list-manager.component';
-import { CheckOffManagerComponent } from './checkoffs/check-off-manager.component';
 
 const appRoutes: Routes = [
 	{
 		path: ''
-		,component: CheckOffManagerComponent
+		,component: LocationsHomeComponent
 		,canActivate: [AuthGuard]
 	},{
 		path: 'home'
@@ -27,6 +28,10 @@ const appRoutes: Routes = [
 	},{
 		path: 'checkoffs'
 		,component: CheckOffManagerComponent
+		,canActivate: [AuthGuard]
+	},{
+		path: 'locations'
+		,component: LocationsHomeComponent
 		,canActivate: [AuthGuard]
 	},{
 		path: 'tasklists'
@@ -63,5 +68,5 @@ const appRoutes: Routes = [
 	}
 ];
 
-export const AppRoutingComponents = [HomeComponent,CalendarComponent,LoginComponent,LogoutComponent,RegisterComponent,ResetRequestComponent,EmailActionComponent,TaskListManagerComponent,CheckOffManagerComponent];
+export const AppRoutingComponents = [HomeComponent,CalendarComponent,LoginComponent,LogoutComponent,RegisterComponent,ResetRequestComponent,EmailActionComponent,TaskListManagerComponent,CheckOffManagerComponent,LocationsHomeComponent];
 export const AppRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes);

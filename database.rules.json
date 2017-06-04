@@ -8,6 +8,10 @@
 				".indexOn": ["completedDate"]
 			}
 		},
+		"locLog": {
+			".read": "auth.uid != null",
+			".write": "auth.uid != null"
+		},
 		"users": {
 			".read": "auth.uid != null",
 			"$userId": {

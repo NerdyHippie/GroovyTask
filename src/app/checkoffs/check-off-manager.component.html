@@ -1,4 +1,7 @@
 <h2>CheckOffs</h2>
+<pre>{{loc | json}}</pre>
+<button type="button" (click)="startTracking()">Start Tracking</button>
+<button type="button" (click)="stopTracking()">Stop Tracking</button>
 <section class="check-offs-container">
 	<check-off-item *ngFor="let item of myItems | sort:byName" [item]="item"></check-off-item>
 </section>

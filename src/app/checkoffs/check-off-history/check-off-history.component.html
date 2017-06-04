@@ -2,4 +2,6 @@
 	<h3>History</h3>
 	
 	<check-off-history-item *ngFor="let item of historyItems | reverse" [item]="item"></check-off-history-item>
+	
+	<div *ngIf="!historyItems || !historyItems.length">Nothing checked off in the last 24 hours</div>
 </div>
