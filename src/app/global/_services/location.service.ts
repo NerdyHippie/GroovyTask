@@ -10,6 +10,8 @@ export class LocationService {
 	logInterval:any;
 	positionLog:any;
 	positionLog$:any = this.db.list('/locLog');
+	trackLog:any;
+	trackLog$:any = this.db.list('/trackLog');
 	
   constructor(private db:AngularFireDatabase) {
   	this.initialize();

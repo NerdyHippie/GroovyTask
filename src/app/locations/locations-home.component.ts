@@ -16,16 +16,24 @@ export class LocationsHomeComponent implements OnInit,OnDestroy {
 	formData: any = {};
 	locLog: any;
 	isTracking: boolean;
+	trackProgress: boolean = false;
 	pendingAdds:Array<any> = [];
+	pendingChecks:Array<any> = [];
+	savedChecks:Array<any>;
 	savedPoints:Array<any>;
 	
   constructor(private LocationService: LocationService) { }
 
   ngOnInit() {
   	this.isTracking = this.LocationService.isTracking;
-  	this.LocationService.location.subscribe(data => this.currentPosition = data);
+  	this.LocationService.location.subscribe(data => {
+  		this.currentPosition = data;
+  		
+  		this.setCheckpoint();
+	  });
   	this.LocationService.startTrackingPosition();
     this.LocationService.positionLog$.subscribe(data => this.savedPoints = data);
+    this.LocationService.trackLog$.subscribe(data => this.savedChecks = data);
   }
   
   ngOnDestroy() {
@@ -46,6 +54,31 @@ export class LocationsHomeComponent implements OnInit,OnDestroy {
 	
 	  this.resetForm();
   }
+  
+  setCheckpoint() {
+  	if (this.trackProgress) {
+		  console.log('set checkpoint');
+		  let posPkg:any = {};
+		  posPkg.location = this.LocationService.makePositionObj();
+		  posPkg.timestamp = moment().format();
+		
+		  let stampText = posPkg.latitude + '|' + posPkg.longitude + ' ('+ posPkg.accuracy +')';
+		  this.pendingChecks.push(stampText);
+		
+		  this.LocationService.trackLog$.push(posPkg).then(data => {
+			  console.log('add success',data);
+			  this.pendingChecks.splice(this.pendingChecks.indexOf(stampText),1);
+		  });
+	  } else {
+		  console.log('not tracking, do nothing;')
+	  }
+  	
+  }
+  
+  toggleTracking() {
+  	this.trackProgress = !this.trackProgress;
+  }
+  
   resetForm() {
 	  this.formData = {};
   }

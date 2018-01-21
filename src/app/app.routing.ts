@@ -12,6 +12,7 @@ import { ResetRequestComponent } from './core/reset-request/reset-request.compon
 import { EmailActionComponent } from './core/email-action/email-action.component';
 import { CheckOffManagerComponent } from './checkoffs/check-off-manager.component';
 import { LocationsHomeComponent } from './locations/locations-home.component';
+import {MapsHomeComponent} from "./maps/maps-home.component";
 import { TaskListManagerComponent } from './tasklists/task-list-manager.component';
 import { UserDetailComponent } from './admin/user-detail/user-detail.component';
 import { UserEditorComponent } from './admin/user-editor/user-editor.component';
@@ -19,7 +20,7 @@ import { UserEditorComponent } from './admin/user-editor/user-editor.component';
 const appRoutes: Routes = [
 	{
 		path: ''
-		,component: LocationsHomeComponent
+		,component: MapsHomeComponent
 		,canActivate: [AuthGuard]
 	},{
 		path: 'home'
@@ -32,6 +33,10 @@ const appRoutes: Routes = [
 	},{
 		path: 'locations'
 		,component: LocationsHomeComponent
+		,canActivate: [AuthGuard]
+	},{
+		path: 'maps'
+		,component: MapsHomeComponent
 		,canActivate: [AuthGuard]
 	},{
 		path: 'tasklists'

@@ -43,6 +43,7 @@ import { ShowCompletePipe } from './global/_pipes/index'
 
 // Environment
 import { environment } from '../environments/environment';
+import { MapsHomeComponent } from './maps/maps-home.component';
 
 
 // Concatenate Components here for readability
@@ -80,6 +81,7 @@ export const PrimeModules: Array<any> = [CalendarModule,EditorModule,GlobalModul
     CheckOffItemEditorComponent,
     CheckOffHistoryComponent,
     CheckOffHistoryItemComponent,
+    MapsHomeComponent,
     //LocationsHomeComponent,
     //CheckOffManagerComponent
   ],
